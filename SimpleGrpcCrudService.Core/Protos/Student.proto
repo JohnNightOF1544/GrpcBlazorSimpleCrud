@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option csharp_namespace = "SimpleGrpcCrudService";
+import "Protos/status.proto";
+
+package RuleBuilder;
+
+service StudentBackend {
+	rpc SaveStudent (StudentRecordRequest) returns (google.rpc.Status);
+
+	rpc GetStudentRecord (StudentRecordFilter) returns (StudentRecordRequest);
+
+	rpc DeleteStudentRecord (StudentRecordFilter) returns (google.rpc.Status);
+
+	rpc GetAll (StudentEmpty) returns (StudentArray);
+}
+
+message StudentEmpty {
+
+}
+
+message StudentRecordRequest {
+	int32 studentId = 1;
+	string webId = 2;
+	string firstName = 3;
+	string lastName = 4;
+	string StudentSecurityNumber = 5;
+
+	google.rpc.Status status = 99;
+}
+
+message StudentRecordFilter {
+	string webId = 1;
+}
+
+message StudentArray {
+	repeated StudentRecordRequest items = 1;
+
+	google.rpc.Status status = 99;
+}

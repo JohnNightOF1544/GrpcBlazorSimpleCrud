@@ -1,0 +1,46 @@
+﻿@page "/get-page"
+
+@inject SimpleCrudFrontend.Services.BackendService MyBackendService
+@inject IConfiguration Configuration
+@inject NavigationManager NavigationManager
+
+<h1>Grpc and Blazor Exaple Crud</h1>
+
+@if (students != null)
+{
+    <table class="table">
+        <thread>
+            <tr>
+
+                <th>WebId</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Student Security Number</th>
+            </tr>
+        </thread>
+        <tbody>
+            @foreach (var record in students)
+            {
+                <tr>
+
+                    <td>@record.WebId</td>
+                    <td>@record.FirstName</td>
+                    <td>@record.LastName</td>
+                    <td>@record.StudentSecurityNumber</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    private List<SimpleCrudFrontend.Models.Student> students = new List<Models.Student>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        students = await MyBackendService.GetAllStudent();
+    }
+}

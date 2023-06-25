@@ -1,0 +1,13 @@
+﻿@page "/create-page"
+
+@inject IConfiguration Configuration
+@inject SimpleCrudFrontend.Services.BackendService MyBackendService
+@inject NavigationManager MyNavigationManager
+
+@code {
+    private SimpleCrudFrontend.Models.Student addStudent = new Models.Student();
+
+    public async Task SaveStudent()
+    {
+    }
+}

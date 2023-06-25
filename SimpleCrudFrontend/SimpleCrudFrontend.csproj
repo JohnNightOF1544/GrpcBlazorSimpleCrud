@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\status.proto" />
+    <None Remove="Protos\Student.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.23.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.54.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.54.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.56.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="NLog" Version="5.2.0" />
+    <PackageReference Include="Radzen.Blazor" Version="4.13.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\status.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\Student.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>

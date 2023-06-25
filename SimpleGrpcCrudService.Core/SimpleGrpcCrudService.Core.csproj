@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\status.proto" />
+    <None Remove="Protos\Student.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.23.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.54.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.56.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.12">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Nlog" Version="5.2.0" />
+    <PackageReference Include="Nlog.Extensions.Logging" Version="5.3.0" />
+    <PackageReference Include="Nlog.Schema" Version="5.2.0" />
+    <PackageReference Include="Nlog.Web.AspNetCore" Version="5.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\status.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\Student.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>
