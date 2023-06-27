@@ -43,7 +43,7 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Persistences
         {
             var selectStudent = new StudentAdapter(_config).GetAllStudentRecord();
 
-            if (selectStudent.Count() > 1)
+            if (selectStudent.Count() >= 1)
             {
                 return selectStudent;
             }

@@ -6,7 +6,7 @@
 
 <div class="create-student-button">
     <RadzenButton Style="background-color: blue;" BusyText="Processing..."
-            Click="@CreateStudentPage" Text="List of Student" />
+            Click="@CreateStudentPage" Text="Create Student" />
 </div>
 
 <h1>Grpc and Blazor Exaple Crud</h1>
@@ -14,7 +14,7 @@
 @if (students != null)
 {
     <table class="table">
-        <thread>
+        <thead>
             <tr>
                 <th>Student Id</th>
                 <th>WebId</th>
@@ -23,7 +23,7 @@
                 <th>Student Security Number</th>
                 <th></th>
             </tr>
-        </thread>
+        </thead>
         <tbody>
             @foreach (var record in students)
             {

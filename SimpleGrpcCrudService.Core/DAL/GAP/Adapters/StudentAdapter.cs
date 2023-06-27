@@ -156,6 +156,7 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
             return new BLL.RecordContents.StudentRecordComparable()
             {
                 StudentId = student.StudentId,
+                WebId = student.WebId,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
                 StudentSecurityNumber = student.StudentSecurityNumber,
