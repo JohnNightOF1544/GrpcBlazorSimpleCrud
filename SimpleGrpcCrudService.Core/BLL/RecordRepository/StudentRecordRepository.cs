@@ -32,6 +32,17 @@ namespace SimpleGrpcCrudService.Core.BLL.RecordRepository
                     throw new Exception($"Rule Record couldn't add to the rules: {studentRecord.Webid}");
                 _nlog.Trace("Webid {0} Update is Cache", studentRecord.Webid);
             }
+            else
+            {
+                if (_studentRecordCache.TryAdd(studentRecord.Webid, studentRecord))
+                    _nlog.Trace($"Webid {studentRecord.Webid} Added in Cache");
+                else
+                    _nlog.Warn($"Webid {studentRecord.Webid} 2nd try to Add");
+
+            }
+
+            _studentRecordPersistence.Save(studentRecord);
+            _nlog.Trace($"Webid {studentRecord.Webid} Saved in gap");
         }
         #endregion
 
@@ -53,6 +64,7 @@ namespace SimpleGrpcCrudService.Core.BLL.RecordRepository
             {
                 _nlog.Fatal("Attempting to find a Student record with a webid == null in the repo.");
                 studentRecord = new RecordContents.StudentFilter(Guid.NewGuid().ToString());
+                return false;
             }
 
             if (_studentRecordCache.TryGetValue(webid, out RecordContents.StudentFilter studentFromCache))

@@ -55,7 +55,7 @@
 
     private void OnEditStudentState(SimpleCrudFrontend.Models.Student student)
     {
-        NavigationManager.NavigateTo($"/edit-student-page");
+        NavigationManager.NavigateTo($"/edit-student-page/{student.WebId}");
     }
 
     private async Task Delete(string Webid)

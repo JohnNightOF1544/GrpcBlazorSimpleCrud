@@ -1,7 +1,7 @@
-﻿@page "/create-page"
+﻿@page "/edit-student-page/{id:guid}"
 
-@inject IConfiguration Configuration
 @inject SimpleCrudFrontend.Services.BackendService MyBackendService
+@inject IConfiguration Configuration
 @inject NavigationManager MyNavigationManager
 
 <style>
@@ -9,31 +9,30 @@
         margin-bottom: 16px;
     }
 </style>
+
 <div class="create-student-button">
-    <RadzenButton Style="background-color: blue;" BusyText="Processing..."
-                  Click="@SaveStudent" Text="Create Student" />
-                  
+    <RadzenButton Style="background-color: blue;" BusyText="Updating..." Click=@SaveStudent Text="Update Student" />
 </div>
 
-<h3>Create - Student Page</h3>
+<h3>Edit - Student Page</h3>
 
-@if (addStudent == null)
+@if (EditStudent == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <EditForm Model="addStudent">
+    <EditForm Model="EditStudent">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <RadzenFieldset Text="Student Name">
+                    <RadzenFieldset Text="Edit Student Info">
                         <div class="row">
                             <div class="col-md-3 align-items-center d-flex">
                                 <RadzenLabel Text="First Name" />
                             </div>
                             <div class="col-md-8">
-                                <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.FirstName" Placeholder="Type First Name" />
+                                <RadzenTextBox style="width: 100%;" @bind-Value="EditStudent.FirstName" />
                             </div>
                         </div>
                         <div class="row">
@@ -41,7 +40,7 @@ else
                                 <RadzenLabel Text="Last Name" />
                             </div>
                             <div class="col-md-8">
-                                <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.LastName" Placeholder="Type Last Name" />
+                                <RadzenTextBox @bind-Value="EditStudent.LastName" style="width: 100%;" />
                             </div>
                         </div>
                     </RadzenFieldset>
@@ -53,7 +52,7 @@ else
                                 <RadzenLabel Text="SSN" />
                             </div>
                             <div class="col-md-8">
-                                <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.StudentSecurityNumber" Placeholder="Type SSN" />
+                                <RadzenTextBox @bind-Value="EditStudent.StudentSecurityNumber" style="width: 100%;" />
                             </div>
                         </div>
                     </RadzenFieldset>
@@ -64,17 +63,21 @@ else
 }
 
 @code {
-    private SimpleCrudFrontend.Models.Student addStudent = new Models.Student();
+    [Parameter]
+    public Guid id { get; set; }
+
+    public SimpleCrudFrontend.Models.Student EditStudent = new Models.Student();
+
+    protected override async Task OnInitializedAsync()
+    {
+        EditStudent = await MyBackendService.GetStudentRecord(id);
+        StateHasChanged();
+    }
 
     public async Task SaveStudent()
     {
-        await MyBackendService.SaveStudent(addStudent);
+        await MyBackendService.SaveStudent(EditStudent);
 
         MyNavigationManager.NavigateTo("/get-student-page");
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
     }
 }

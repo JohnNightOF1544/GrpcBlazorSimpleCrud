@@ -119,7 +119,7 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
                 using var dbContext = new StudentContext(_contextOptions);
 
                 var studentRecord = (from student in dbContext.Students
-                                     where student.StudentId == recordRequest.StudentId
+                                     where student.WebId == recordRequest.WebId
                                      select student).ToList();
 
                 if (studentRecord.Count == 0)

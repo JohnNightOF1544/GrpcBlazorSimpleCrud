@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleGrpcCrudService", "Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleGrpcCrudService.Core", "SimpleGrpcCrudService.Core\SimpleGrpcCrudService.Core.csproj", "{5FE6D74A-6765-4A8B-A910-73F85E01FFE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCrudFrontend", "SimpleCrudFrontend\SimpleCrudFrontend.csproj", "{C69B3487-A603-48AF-83EC-D9F008F9C265}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCrudFrontend", "SimpleCrudFrontend\SimpleCrudFrontend.csproj", "{C69B3487-A603-48AF-83EC-D9F008F9C265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
