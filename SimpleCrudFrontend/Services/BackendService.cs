@@ -14,7 +14,7 @@ namespace SimpleCrudFrontend.Services
 
         public BackendService(ILogger<BackendService> logger, IConfiguration configuration)
         {
-            _url = configuration.GetValue<string>("ServiceData:Backend:URL");
+            _url = configuration.GetValue<string>("ServiceData:BackendService:URL");
         }
 
         public void Connect()

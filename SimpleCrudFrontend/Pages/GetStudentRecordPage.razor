@@ -1,8 +1,13 @@
-﻿@page "/get-page"
+﻿@page "/get-student-page"
 
 @inject SimpleCrudFrontend.Services.BackendService MyBackendService
 @inject IConfiguration Configuration
 @inject NavigationManager NavigationManager
+
+<div class="create-student-button">
+    <RadzenButton Style="background-color: blue;" BusyText="Processing..."
+            Click="@CreateStudentPage" Text="List of Student" />
+</div>
 
 <h1>Grpc and Blazor Exaple Crud</h1>
 
@@ -11,23 +16,27 @@
     <table class="table">
         <thread>
             <tr>
-
+                <th>Student Id</th>
                 <th>WebId</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Student Security Number</th>
+                <th></th>
             </tr>
         </thread>
         <tbody>
             @foreach (var record in students)
             {
                 <tr>
-
+                    <td>@record.StudentId</td>
                     <td>@record.WebId</td>
                     <td>@record.FirstName</td>
                     <td>@record.LastName</td>
                     <td>@record.StudentSecurityNumber</td>
-
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="@(() => OnEditStudentState(record))">Edit</button>
+                        <button type="button" class="btn btn-link" @onclick="@(() => Delete(record.WebId))">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -42,5 +51,21 @@
     protected override async Task OnInitializedAsync()
     {
         students = await MyBackendService.GetAllStudent();
+    }
+
+    private void OnEditStudentState(SimpleCrudFrontend.Models.Student student)
+    {
+        NavigationManager.NavigateTo($"/edit-student-page");
+    }
+
+    private async Task Delete(string Webid)
+    {
+        await MyBackendService.DeleteRecord(Webid);
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    public async Task CreateStudentPage()
+    {
+        NavigationManager.NavigateTo("/create-page");
     }
 }

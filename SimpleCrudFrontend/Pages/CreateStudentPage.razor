@@ -4,10 +4,76 @@
 @inject SimpleCrudFrontend.Services.BackendService MyBackendService
 @inject NavigationManager MyNavigationManager
 
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+<div class="create-student-button">
+    <RadzenButton Style="background-color: blue;" BusyText="Processing..."
+                  Click="@SaveStudent" Text="Create Rule" />
+</div>
+
+<h3>Create - Student Page</h3>
+
+@if (addStudent == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="addStudent">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <RadzenFieldset Text="Student Name">
+                        <div class="row">
+                            <div class="col-md-3 align-items-center d-flex">
+                                <RadzenLabel Text="First Name" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.FirstName" Placeholder="Type First Name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 align-items-center d-flex">
+                                <RadzenLabel Text="Last Name" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.LastName" Placeholder="Type Last Name" />
+                            </div>
+                        </div>
+                    </RadzenFieldset>
+                </div>
+                <div class="col-md-6">
+                    <RadzenFieldset Text="Student Security Number">
+                        <div class="row">
+                            <div class="col-md-3 align-items-center d-flex">
+                                <RadzenLabel Text="SSN" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.StudentSecurityNumber" Placeholder="Type SSN" />
+                            </div>
+                        </div>
+                    </RadzenFieldset>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
 @code {
     private SimpleCrudFrontend.Models.Student addStudent = new Models.Student();
 
     public async Task SaveStudent()
     {
+        await MyBackendService.SaveStudent(addStudent);
+
+        MyNavigationManager.NavigateTo("/get-student-page");
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
     }
 }
