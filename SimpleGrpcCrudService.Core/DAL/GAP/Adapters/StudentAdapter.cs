@@ -42,11 +42,11 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
                         FirstName = recordRequest.FirstName,
                         LastName = recordRequest.LastName,
                         StudentSecurityNumber = recordRequest.StudentSecurityNumber,
+                        TimeIn = recordRequest.TimeIn.ToDateTime(),                        
                     };
 
                     dbContext.Students.Add(rule);
                 }
-
                 _ = dbContext.SaveChanges();
             }
             catch (Exception ex)
