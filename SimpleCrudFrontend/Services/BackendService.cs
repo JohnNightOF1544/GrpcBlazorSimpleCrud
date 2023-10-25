@@ -1,6 +1,8 @@
-﻿using Grpc.Net.Client;
+﻿using Google.Protobuf.WellKnownTypes;
+using Grpc.Net.Client;
 using NLog;
 using System.Linq.Expressions;
+
 
 namespace SimpleCrudFrontend.Services
 {
@@ -167,8 +169,12 @@ namespace SimpleCrudFrontend.Services
                 WebId = studentRecord.id.ToString(),
                 FirstName = studentRecord.FirstName,
                 LastName = studentRecord.LastName,
-                StudentSecurityNumber = studentRecord.StudentSecurityNumber
+                StudentSecurityNumber = studentRecord.StudentSecurityNumber,
             };
+
+            if (studentRecord?.TimeIn != null)
+                GrpcStudentRecord.TimeIn = studentRecord.TimeIn.Value.ToUniversalTime().ToTimestamp();
+
             return GrpcStudentRecord;
         }
         #endregion

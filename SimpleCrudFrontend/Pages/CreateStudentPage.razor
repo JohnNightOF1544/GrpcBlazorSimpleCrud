@@ -56,6 +56,14 @@ else
                                 <RadzenTextBox style="width: 100%;" @bind-Value="addStudent.StudentSecurityNumber" Placeholder="Type SSN" />
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-3 align-items-center d-flex">
+                                <RadzenLabel Text="TimeIn" />
+                            </div>
+                            <div class="col-md-8">
+                                <RadzenDatePicker class="datepicker" @bind-Value="addStudent.TimeIn" YearRange="@("2023:" + @DateTime.Now.Year.ToString())" DateFormat="MM/dd/yyyy h:mm tt" />
+                            </div>
+                        </div>
                     </RadzenFieldset>
                 </div>
             </div>

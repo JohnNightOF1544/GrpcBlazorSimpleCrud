@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 option csharp_namespace = "SimpleGrpcCrudService";
+import "google/protobuf/timestamp.proto";
 import "Protos/status.proto";
 
 package RuleBuilder;
@@ -25,6 +26,7 @@ message StudentRecordRequest {
 	string firstName = 3;
 	string lastName = 4;
 	string StudentSecurityNumber = 5;
+	google.protobuf.Timestamp timeIn = 6;
 
 	google.rpc.Status status = 99;
 }

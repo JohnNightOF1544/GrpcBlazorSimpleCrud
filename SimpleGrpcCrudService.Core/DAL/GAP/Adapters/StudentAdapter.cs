@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using SimpleGrpcCrudService;
 using SimpleGrpcCrudService.Core.BLL.RecordContents;
 using SimpleGrpcCrudService.Core.DAL.Data;
 using SimpleGrpcCrudService.Core.DAL.Models;
@@ -19,6 +20,7 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
         private static readonly Logger _nlog = LogManager.GetCurrentClassLogger();
         private DbContextOptions<StudentContext> _contextOptions;
         private readonly IConfiguration _config;
+        private TimeZoneInfo _currentTimeZone;
 
         public StudentAdapter(IConfiguration config)
         {
@@ -26,6 +28,12 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
             var optionsBuilder = new DbContextOptionsBuilder<StudentContext>();
             optionsBuilder.UseSqlServer(config.GetConnectionString("connectionString"));
             _contextOptions = optionsBuilder.Options;
+        }
+
+        private void LaodConfiguration()
+        {
+            var timeZone = _config.GetValue<string>("SimpleCrudSettings:CurrentTimeZone");
+            _currentTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
         }
 
         #region InsertStudent
@@ -42,7 +50,7 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
                         FirstName = recordRequest.FirstName,
                         LastName = recordRequest.LastName,
                         StudentSecurityNumber = recordRequest.StudentSecurityNumber,
-                        TimeIn = recordRequest.TimeIn.ToDateTime(),                        
+                        TimeIn = recordRequest.TimeIn.ToDateTime().ToLocalTime(),
                     };
 
                     dbContext.Students.Add(rule);
@@ -149,6 +157,16 @@ namespace SimpleGrpcCrudService.Core.DAL.GAP.Adapters
             }
         }
         #endregion
+
+        private DateTime? GetTimeInFromUtc(StudentRecordRequest studentRecord)
+        {
+            DateTime? timeIn = null;
+            if (studentRecord != null)
+                timeIn = TimeZoneInfo.ConvertTimeToUtc(studentRecord.TimeIn.ToDateTime(), _currentTimeZone);
+            return timeIn;
+        }
+
+
 
         #region CreateNewBllRule
         private static SimpleGrpcCrudService.Core.BLL.RecordContents.StudentRecordComparable CreateBNewBllStudent(Student student)

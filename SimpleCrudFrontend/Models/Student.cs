@@ -16,5 +16,8 @@ namespace SimpleCrudFrontend.Models
         [Required]
         [StringLength(7)]
         public string StudentSecurityNumber { get; set; }
+        [Required]
+        public DateTime? TimeIn { get; set; } = DateTime.Now;
+
     }
 }
